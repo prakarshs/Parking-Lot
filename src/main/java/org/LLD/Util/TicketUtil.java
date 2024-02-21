@@ -9,7 +9,6 @@ import java.time.Instant;
 import java.util.Date;
 
 public class TicketUtil {
-    Integer ticketIndex = 1;
     public ParkingTicket generateTicket(ParkingSpot spot, VehicleEntity vehicle, ParkingTicketRepository parkingTicketRepository) {
         ParkingTicket ticket = ParkingTicket.builder()
                 .parkingTicketId(spot.getParkingLotId()+"_"+spot.getParkingFloorId()+"_"+spot.getSpotId())
@@ -18,8 +17,7 @@ public class TicketUtil {
                 .parkingSpot(spot)
                 .build();
 
-        parkingTicketRepository.getParkingTicketMap().put(ticketIndex, ticket);
-        ticketIndex++;
+        parkingTicketRepository.getParkingTicketMap().put(ticket.getParkingTicketId(), ticket);
         return ticket;
     }
 }

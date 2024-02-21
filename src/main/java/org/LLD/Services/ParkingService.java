@@ -12,5 +12,7 @@ public interface ParkingService {
 
     String  parkVehicle(VehicleType vehicleType, String vehicleRegNumber, String vehicleColor);
 
-    void displayTicket(Integer ticketId);
+    void displayTicket(String ticketId);
+
+    String unparkVehicle(String ticketId);
 }

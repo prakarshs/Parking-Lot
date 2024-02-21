@@ -92,7 +92,8 @@ public class FindingUtil {
         return null;
     }
 
-    public ParkingTicket getTicket(Integer ticketId, ParkingTicketRepository parkingTicketRepository) {
+    public ParkingTicket getTicket(String ticketId, ParkingTicketRepository parkingTicketRepository) {
         return parkingTicketRepository.getParkingTicketMap().get(ticketId);
     }
+
 }

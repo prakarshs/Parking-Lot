@@ -15,5 +15,5 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 public class ParkingTicketRepository {
-    private Map<Integer, ParkingTicket> parkingTicketMap = new HashMap<>();
+    private Map<String, ParkingTicket> parkingTicketMap = new HashMap<>();
 }

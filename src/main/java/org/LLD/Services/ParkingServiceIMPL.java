@@ -99,8 +99,21 @@ public class ParkingServiceIMPL implements ParkingService{
     }
 
     @Override
-    public void displayTicket(Integer ticketId) {
+    public void displayTicket(String ticketId) {
         ParkingTicket ticket = utilAutowire.getFindingUtil().getTicket(ticketId,repositoryAutowire.getParkingTicketRepository());
         utilAutowire.getDisplayUtil().displayTicketDetails(ticket);
+    }
+
+    @Override
+    public String unparkVehicle(String ticketCode) {
+
+        ParkingTicket ticket = utilAutowire.getFindingUtil().getTicket(ticketCode,repositoryAutowire.getParkingTicketRepository());
+        String unparkResponse = "!----- Invalid Ticket -----!";
+        if(ticket!=null){
+            ParkingSpot spot = ticket.getParkingSpot();
+            spot.setSpotState(SpotState.free);
+            unparkResponse = "Unparked vehicle with Registration Number: "+ticket.getVehicleEntity().getVehicleRegNumber()+" and Color: "+ticket.getVehicleEntity().getVehicleColor();
+        }
+        return unparkResponse;
     }
 }
