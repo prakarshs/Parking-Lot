@@ -1,4 +1,4 @@
-package org.LLD.Services.Parking;
+package org.LLD.Services;
 
 import org.LLD.Constants.Enums.SpotState;
 import org.LLD.Constants.Enums.VehicleType;
@@ -56,5 +56,23 @@ public class ParkingServiceIMPL implements ParkingService{
                 .build();
 
         return "Created parking lot with "+repositoryAutowire.getParkingFloorRepository().getParkingFloorMap().size()+" floors and "+repositoryAutowire.getParkingFloorRepository().getParkingFloorMap().get(2).getParkingSpots().size()+" slots per floor";
+    }
+
+    @Override
+    public String displayFreeCount(VehicleType vehicleType) {
+
+
+
+        return null;
+    }
+
+    @Override
+    public String displayFreeSlots(VehicleType vehicleType) {
+        return null;
+    }
+
+    @Override
+    public String displayOccupiedSlots(VehicleType vehicleType) {
+        return null;
     }
 }

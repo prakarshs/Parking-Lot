@@ -1,7 +1,7 @@
 package org.LLD;
 
-import org.LLD.Services.Parking.ParkingService;
-import org.LLD.Services.Parking.ParkingServiceIMPL;
+import org.LLD.Services.ParkingService;
+import org.LLD.Services.ParkingServiceIMPL;
 import org.LLD.Constants.Commands;
 
 import java.util.Scanner;
