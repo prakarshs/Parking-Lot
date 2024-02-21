@@ -24,7 +24,13 @@ public class ParkingServiceIMPL implements ParkingService {
             Map<Integer, ParkingSpot> spotsInFloor = new HashMap<>();
             for (int spot = 1; spot <= numberOfSpots; spot++) {
 
-                ParkingSpot parkingSpot = ParkingSpot.builder().spotId(spot).parkingFloorId(floor).parkingLotId(parkingLotId).spotState(SpotState.free).spotType(VehicleType.CAR).build();
+                ParkingSpot parkingSpot = ParkingSpot.builder()
+                        .spotId(spot)
+                        .parkingFloorId(floor)
+                        .parkingLotId(parkingLotId)
+                        .spotState(SpotState.free)
+                        .spotType(VehicleType.CAR)
+                        .build();
 
                 if (spot == 1) {
                     parkingSpot.setSpotType(VehicleType.TRUCK);
@@ -37,12 +43,19 @@ public class ParkingServiceIMPL implements ParkingService {
                 spotsInFloor.put(spot, parkingSpot);
             }
 
-            ParkingFloor parkingFloor = ParkingFloor.builder().parkingFloorId(floor).parkingLotId(parkingLotId).parkingSpots(spotsInFloor).build();
+            ParkingFloor parkingFloor = ParkingFloor.builder()
+                    .parkingFloorId(floor)
+                    .parkingLotId(parkingLotId)
+                    .parkingSpots(spotsInFloor)
+                    .build();
             repositoryAutowire.getParkingFloorRepository().getParkingFloorMap().put(floor, parkingFloor);
         }
 
 
-        ParkingLot parkingLot = ParkingLot.builder().parkingLotId(parkingLotId).parkingFloors(repositoryAutowire.getParkingFloorRepository().getParkingFloorMap()).build();
+        ParkingLot parkingLot = ParkingLot.builder()
+                .parkingLotId(parkingLotId)
+                .parkingFloors(repositoryAutowire.getParkingFloorRepository().getParkingFloorMap())
+                .build();
 
         return "Created parking lot with " + repositoryAutowire.getParkingFloorRepository().getParkingFloorMap().size() + " floors and " + repositoryAutowire.getParkingFloorRepository().getParkingFloorMap().get(2).getParkingSpots().size() + " slots per floor";
     }
@@ -70,7 +83,11 @@ public class ParkingServiceIMPL implements ParkingService {
     @Override
     public String parkVehicle(VehicleType vehicleType, String vehicleRegNumber, String vehicleColor) {
 
-        VehicleEntity vehicle = VehicleEntity.builder().vehicleType(vehicleType).vehicleRegNumber(vehicleRegNumber).vehicleColor(vehicleColor).build();
+        VehicleEntity vehicle = VehicleEntity.builder()
+                .vehicleType(vehicleType)
+                .vehicleRegNumber(vehicleRegNumber)
+                .vehicleColor(vehicleColor)
+                .build();
 
         ParkingSpot spot = utilAutowire.getFindingUtil().getSlotVehicle(vehicle.getVehicleType(), repositoryAutowire.getParkingSpotRepository());
 
@@ -93,14 +110,13 @@ public class ParkingServiceIMPL implements ParkingService {
     public String unparkVehicle(String ticketCode) {
 
         ParkingTicket ticket = utilAutowire.getFindingUtil().getTicket(ticketCode, repositoryAutowire.getParkingTicketRepository());
-
-        ParkingSpot spot = ticket.getParkingSpot();
-
         String unparkResponse = "!----- Invalid Ticket -----!";
-
-        if (ticket != null && spot.getSpotState() == SpotState.occupied) {
-            spot.setSpotState(SpotState.free);
-            unparkResponse = "Unparked vehicle with Registration Number: " + ticket.getVehicleEntity().getVehicleRegNumber() + " and Color: " + ticket.getVehicleEntity().getVehicleColor();
+        if (ticket != null) {
+            ParkingSpot spot = ticket.getParkingSpot();
+            if (spot.getSpotState() == SpotState.occupied) {
+                spot.setSpotState(SpotState.free);
+                unparkResponse = "Unparked vehicle with Registration Number: " + ticket.getVehicleEntity().getVehicleRegNumber() + " and Color: " + ticket.getVehicleEntity().getVehicleColor();
+            }
         }
         return unparkResponse;
     }
