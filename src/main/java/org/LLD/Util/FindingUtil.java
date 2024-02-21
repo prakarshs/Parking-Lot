@@ -17,11 +17,11 @@ public class FindingUtil {
 
         Map<Integer, List<Integer>> result = new HashMap<>();
 
-        for(Map.Entry<Integer, ParkingSpot> spotEntry : vehicleSpotsTotal.entrySet()){
+        for (Map.Entry<Integer, ParkingSpot> spotEntry : vehicleSpotsTotal.entrySet()) {
 
             Integer floorId = spotEntry.getValue().getParkingFloorId();
-            if(spotEntry.getValue().getSpotState() == SpotState.free){
-                if(!result.containsKey(floorId)) {
+            if (spotEntry.getValue().getSpotState() == SpotState.free) {
+                if (!result.containsKey(floorId)) {
                     result.put(floorId, new ArrayList<>());
                 }
                 result.get(floorId).add(spotEntry.getValue().getSpotId());
@@ -32,20 +32,37 @@ public class FindingUtil {
     }
 
     public Map<Integer, List<Integer>> getFreeSlotsResult(VehicleType vehicleType, ParkingSpotRepository parkingSpotRepository) {
+
         var vehicleTotalSlots = parkingSpotRepository.getParkingSpotMap().get(vehicleType);
+        Map<Integer, List<Integer>> result = new HashMap<>();
 
-        Map<Integer,List<Integer>> result = new HashMap<>();
-
-        for (Map.Entry<Integer,ParkingSpot> spotEntry : vehicleTotalSlots.entrySet()){
+        for (Map.Entry<Integer, ParkingSpot> spotEntry : vehicleTotalSlots.entrySet()) {
             Integer floorId = spotEntry.getValue().getParkingFloorId();
-            if(spotEntry.getValue().getSpotState() == SpotState.free){
-                if(!result.containsKey(floorId)) {
+            if (spotEntry.getValue().getSpotState() == SpotState.free) {
+                if (!result.containsKey(floorId)) {
                     result.put(floorId, new ArrayList<>());
                 }
                 result.get(floorId).add(spotEntry.getValue().getSpotId());
             }
         }
 
+        return result;
+    }
+
+    public Map<Integer, List<Integer>> getOccupiedSlotsResult(VehicleType vehicleType, ParkingSpotRepository parkingSpotRepository) {
+
+        var vehicleTotalSlots = parkingSpotRepository.getParkingSpotMap().get(vehicleType);
+        Map<Integer,List<Integer>> result = new HashMap<>();
+        for (Map.Entry<Integer,ParkingSpot> spotEntry : vehicleTotalSlots.entrySet()){
+
+            Integer floorId = spotEntry.getValue().getParkingFloorId();
+            if (spotEntry.getValue().getSpotState() == SpotState.occupied){
+                if(!result.containsKey(floorId)){
+                    result.put(floorId,new ArrayList<>());
+                }
+                result.get(floorId).add(spotEntry.getValue().getSpotId());
+            }
+        }
         return result;
     }
 }

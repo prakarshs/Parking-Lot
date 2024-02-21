@@ -26,4 +26,14 @@ public class DisplayUtil {
         }
 
     }
+
+    public void displayOccupiedSlots(Map<Integer, List<Integer>> result, VehicleType vehicleType) {
+        for (Map.Entry<Integer,List<Integer>> resultEntry : result.entrySet()) {
+            System.out.print("Occupied slots for " + vehicleType + " on Floor " + resultEntry.getKey() + ": ");
+            resultEntry.getValue().forEach(spotId -> {
+                System.out.print(spotId + ",");
+            });
+            System.out.println();
+        }
+    }
 }

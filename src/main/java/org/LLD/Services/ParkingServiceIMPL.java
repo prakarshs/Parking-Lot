@@ -76,6 +76,8 @@ public class ParkingServiceIMPL implements ParkingService{
 
     @Override
     public void displayOccupiedSlots(VehicleType vehicleType) {
+        Map<Integer, List<Integer>> result = utilAutowire.getFindingUtil().getOccupiedSlotsResult(vehicleType,repositoryAutowire.getParkingSpotRepository());
+        utilAutowire.getDisplayUtil().displayOccupiedSlots(result,vehicleType);
 
     }
 }
