@@ -26,7 +26,7 @@ public class ParkingLot {
                 }
                 break;
                 case Commands.PARK_VEHICLE : {
-                    System.out.println("park");
+                    System.out.println(parkingService.parkVehicle(VehicleType.valueOf(input[1]),input[2], input[3]));
 
                 }
                 break;
