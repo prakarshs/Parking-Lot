@@ -6,12 +6,15 @@ import org.LLD.Entities.ParkingFloor;
 import org.LLD.Entities.ParkingLot;
 import org.LLD.Entities.ParkingSpot;
 import org.LLD.Helper.RepositoryAutowire;
+import org.LLD.Helper.UtilAutowire;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ParkingServiceIMPL implements ParkingService{
 
+    UtilAutowire utilAutowire = new UtilAutowire();
     RepositoryAutowire repositoryAutowire = new RepositoryAutowire();
     @Override
     public String createParkingLot(String parkingLotId, Integer numberOfFloors, Integer numberOfSpots) {
@@ -23,7 +26,7 @@ public class ParkingServiceIMPL implements ParkingService{
             for (int spot = 1; spot <= numberOfSpots; spot++){
 
                 ParkingSpot parkingSpot = ParkingSpot.builder()
-                        .parkingLotId(floor+"_"+spot)
+                        .spotId(spot)
                         .parkingFloorId(floor)
                         .parkingLotId(parkingLotId)
                         .spotState(SpotState.free)
@@ -59,20 +62,18 @@ public class ParkingServiceIMPL implements ParkingService{
     }
 
     @Override
-    public String displayFreeCount(VehicleType vehicleType) {
-
-
-
-        return null;
+    public void displayFreeCount(VehicleType vehicleType) {
+        utilAutowire.getDisplayUtil().getFreeCount(vehicleType,repositoryAutowire.getParkingSpotRepository());
     }
 
     @Override
-    public String displayFreeSlots(VehicleType vehicleType) {
-        return null;
+    public void displayFreeSlots(VehicleType vehicleType) {
+        utilAutowire.getDisplayUtil().getFreeSlots(vehicleType,repositoryAutowire.getParkingSpotRepository());
+
     }
 
     @Override
-    public String displayOccupiedSlots(VehicleType vehicleType) {
-        return null;
+    public void displayOccupiedSlots(VehicleType vehicleType) {
+
     }
 }

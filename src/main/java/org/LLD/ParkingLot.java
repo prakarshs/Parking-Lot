@@ -1,5 +1,7 @@
 package org.LLD;
 
+import org.LLD.Constants.Enums.DisplayFilter;
+import org.LLD.Constants.Enums.VehicleType;
 import org.LLD.Services.ParkingService;
 import org.LLD.Services.ParkingServiceIMPL;
 import org.LLD.Constants.Commands;
@@ -12,8 +14,8 @@ public class ParkingLot {
         ParkingService parkingService = new ParkingServiceIMPL();
 
         Scanner scanner = new Scanner(System.in);
-
-        while (true){
+        boolean program = true;
+        while (program){
             String[] input = scanner.nextLine().trim().split(" ");
 
             switch (input[0]){
@@ -34,12 +36,16 @@ public class ParkingLot {
                 }
                 break;
                 case Commands.DISPLAY : {
-                    System.out.println("disp");
-
+                    if(input[1].equals(String.valueOf(DisplayFilter.free_count))){
+                       parkingService.displayFreeCount(VehicleType.valueOf(input[2]));
+                    } else if (input[1].equals(String.valueOf(DisplayFilter.free_slots))) {
+                        parkingService.displayFreeSlots(VehicleType.valueOf(input[2]));
+                    }
+                    else System.out.println("!----- INVALID DISPLAY FILTER -----!");
                 }
                 break;
                 case Commands.EXIT : {
-                    System.out.println("exit");
+                    program=false;
                 }
                 break;
                 default:{
@@ -49,6 +55,7 @@ public class ParkingLot {
 
             }
         }
+        System.out.println("***** THANK YOU FOR USING OUR PARKING LOT *****");
 
     }
 }
