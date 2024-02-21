@@ -40,8 +40,9 @@ public class ParkingLot {
                        parkingService.displayFreeCount(VehicleType.valueOf(input[2]));
                     } else if (input[1].equals(String.valueOf(DisplayFilter.free_slots))) {
                         parkingService.displayFreeSlots(VehicleType.valueOf(input[2]));
-                    }
-                    else System.out.println("!----- INVALID DISPLAY FILTER -----!");
+                    } else if (input[1].equals(String.valueOf(DisplayFilter.occupied_slots))) {
+                        parkingService.displayOccupiedSlots(VehicleType.valueOf(input[2]));
+                    } else System.out.println("!----- INVALID DISPLAY FILTER -----!");
                 }
                 break;
                 case Commands.EXIT : {

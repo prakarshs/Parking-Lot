@@ -5,16 +5,14 @@ import org.LLD.Constants.Enums.VehicleType;
 import org.LLD.Entities.ParkingSpot;
 import org.LLD.Repositories.ParkingSpotRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FindingUtil {
     public Map<Integer, List<Integer>> getFreeCountResult(VehicleType vehicleType, ParkingSpotRepository parkingLotRepository) {
-
+        System.out.println("hi");
         var vehicleSpotsTotal = parkingLotRepository.getParkingSpotMap().get(vehicleType);
 
+        System.out.println("hello");
         Map<Integer, List<Integer>> result = new HashMap<>();
 
         for (Map.Entry<Integer, ParkingSpot> spotEntry : vehicleSpotsTotal.entrySet()) {
@@ -34,35 +32,41 @@ public class FindingUtil {
     public Map<Integer, List<Integer>> getFreeSlotsResult(VehicleType vehicleType, ParkingSpotRepository parkingSpotRepository) {
 
         var vehicleTotalSlots = parkingSpotRepository.getParkingSpotMap().get(vehicleType);
-        Map<Integer, List<Integer>> result = new HashMap<>();
+        if(vehicleTotalSlots!=null) {
+            Map<Integer, List<Integer>> result = new HashMap<>();
 
-        for (Map.Entry<Integer, ParkingSpot> spotEntry : vehicleTotalSlots.entrySet()) {
-            Integer floorId = spotEntry.getValue().getParkingFloorId();
-            if (spotEntry.getValue().getSpotState() == SpotState.free) {
-                if (!result.containsKey(floorId)) {
-                    result.put(floorId, new ArrayList<>());
+            for (Map.Entry<Integer, ParkingSpot> spotEntry : vehicleTotalSlots.entrySet()) {
+                Integer floorId = spotEntry.getValue().getParkingFloorId();
+                if (spotEntry.getValue().getSpotState() == SpotState.free) {
+                    if (!result.containsKey(floorId)) {
+                        result.put(floorId, new ArrayList<>());
+                    }
+                    result.get(floorId).add(spotEntry.getValue().getSpotId());
                 }
-                result.get(floorId).add(spotEntry.getValue().getSpotId());
             }
-        }
 
-        return result;
+            return result;
+        }
+        else return null;
     }
 
     public Map<Integer, List<Integer>> getOccupiedSlotsResult(VehicleType vehicleType, ParkingSpotRepository parkingSpotRepository) {
 
         var vehicleTotalSlots = parkingSpotRepository.getParkingSpotMap().get(vehicleType);
-        Map<Integer,List<Integer>> result = new HashMap<>();
-        for (Map.Entry<Integer,ParkingSpot> spotEntry : vehicleTotalSlots.entrySet()){
+        if(vehicleTotalSlots!=null) {
+            Map<Integer, List<Integer>> result = new HashMap<>();
+            for (Map.Entry<Integer, ParkingSpot> spotEntry : vehicleTotalSlots.entrySet()) {
 
-            Integer floorId = spotEntry.getValue().getParkingFloorId();
-            if (spotEntry.getValue().getSpotState() == SpotState.occupied){
-                if(!result.containsKey(floorId)){
-                    result.put(floorId,new ArrayList<>());
+                Integer floorId = spotEntry.getValue().getParkingFloorId();
+                if (spotEntry.getValue().getSpotState() == SpotState.occupied) {
+                    if (!result.containsKey(floorId)) {
+                        result.put(floorId, new ArrayList<>());
+                    }
+                    result.get(floorId).add(spotEntry.getValue().getSpotId());
                 }
-                result.get(floorId).add(spotEntry.getValue().getSpotId());
             }
+            return result;
         }
-        return result;
+        else return null;
     }
 }
