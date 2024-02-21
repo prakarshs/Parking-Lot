@@ -9,4 +9,8 @@ public interface ParkingService {
     void displayFreeCount(VehicleType vehicleType);
     void displayFreeSlots(VehicleType vehicleType);
     void displayOccupiedSlots(VehicleType vehicleType);
+
+    String  parkVehicle(VehicleType vehicleType, String vehicleRegNumber, String vehicleColor);
+
+    void displayTicket(Integer ticketId);
 }

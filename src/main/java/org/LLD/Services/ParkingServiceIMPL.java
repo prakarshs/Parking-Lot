@@ -2,9 +2,7 @@ package org.LLD.Services;
 
 import org.LLD.Constants.Enums.SpotState;
 import org.LLD.Constants.Enums.VehicleType;
-import org.LLD.Entities.ParkingFloor;
-import org.LLD.Entities.ParkingLot;
-import org.LLD.Entities.ParkingSpot;
+import org.LLD.Entities.*;
 import org.LLD.Helper.RepositoryAutowire;
 import org.LLD.Helper.UtilAutowire;
 
@@ -79,5 +77,30 @@ public class ParkingServiceIMPL implements ParkingService{
         Map<Integer, List<Integer>> result = utilAutowire.getFindingUtil().getOccupiedSlotsResult(vehicleType,repositoryAutowire.getParkingSpotRepository());
         utilAutowire.getDisplayUtil().displayOccupiedSlots(result,vehicleType);
 
+    }
+    @Override
+    public String parkVehicle(VehicleType vehicleType, String vehicleRegNumber, String vehicleColor) {
+
+        VehicleEntity vehicle = VehicleEntity.builder()
+                .vehicleType(vehicleType)
+                .vehicleRegNumber(vehicleRegNumber)
+                .vehicleColor(vehicleColor)
+                .build();
+
+        ParkingSpot spot = utilAutowire.getFindingUtil().getSlotVehicle(vehicle.getVehicleType(),repositoryAutowire.getParkingSpotRepository());
+
+        String res = "Could Not Park Vehicle.";
+        if(spot!=null){
+            ParkingTicket ticket = utilAutowire.getTicketUtil().generateTicket(spot,vehicle,repositoryAutowire.getParkingTicketRepository());
+            spot.setSpotState(SpotState.occupied);
+            res = "Parked vehicle. Ticket ID: " + ticket.getParkingTicketId();
+        }
+        return res;
+    }
+
+    @Override
+    public void displayTicket(Integer ticketId) {
+        ParkingTicket ticket = utilAutowire.getFindingUtil().getTicket(ticketId,repositoryAutowire.getParkingTicketRepository());
+        utilAutowire.getDisplayUtil().displayTicketDetails(ticket);
     }
 }

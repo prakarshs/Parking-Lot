@@ -1,6 +1,8 @@
 package org.LLD.Util;
 
 import org.LLD.Constants.Enums.VehicleType;
+import org.LLD.Entities.ParkingTicket;
+import org.LLD.Repositories.ParkingTicketRepository;
 
 import java.util.List;
 import java.util.Map;
@@ -42,5 +44,16 @@ public class DisplayUtil {
             }
         }
         else System.out.println("No Slots Are Occupied For Vehicle Type: "+vehicleType);
+    }
+
+    public void displayTicketDetails(ParkingTicket ticket) {
+        if (ticket!=null){
+            System.out.println("Ticket Reg Number: "+ticket.getParkingTicketId() + "\n"
+            + "Slot Id: "+ticket.getParkingSpot().getParkingFloorId()+"_"+ticket.getParkingSpot().getSpotId()+ "\n"
+            + "Vehicle Details: "+ticket.getVehicleEntity().getVehicleType()+","+ticket.getVehicleEntity().getVehicleRegNumber()+","+ticket.getVehicleEntity().getVehicleColor() + "\n"
+            );
+        }
+        else System.out.println("!----- Invalid Ticket Id -----!");
+
     }
 }

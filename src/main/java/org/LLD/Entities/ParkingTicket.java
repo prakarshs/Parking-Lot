@@ -15,4 +15,5 @@ public class ParkingTicket {
     private String parkingTicketId;
     private Date timeIssued;
     private VehicleEntity vehicleEntity;
+    private ParkingSpot parkingSpot;
 }
