@@ -31,7 +31,7 @@ public class ParkingLot {
                 }
                 break;
                 case Commands.UNPARK_VEHICLE : {
-                    System.out.println("unpark");
+                    System.out.println(parkingService.unparkVehicle(input[1]));
 
                 }
                 break;
